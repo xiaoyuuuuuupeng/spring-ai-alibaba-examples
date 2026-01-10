@@ -15,6 +15,7 @@
  */
 package com.alibaba.cloud.ai.mcp.server.service;
 
+import com.alibaba.cloud.ai.mcp.server.util.TokenHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
@@ -37,7 +38,10 @@ public class TimeService {
 
     @Tool(description = "Get the time of a specified city.")
     public String  getCityTimeMethod(@ToolParam(description = "Time zone id, such as Asia/Shanghai") String timeZoneId) {
-        logger.info("The current time zone is {}", timeZoneId);
+
+        String token = TokenHolder.getToken();
+        logger.info("The current time zone is {} and the token is {}", timeZoneId,token);
+
         return String.format("The current time zone is %s and the current time is " + "%s", timeZoneId,
                 getTimeByZoneId(timeZoneId));
     }

@@ -15,6 +15,7 @@
  */
 package com.alibaba.cloud.ai.mcp.server.filter;
 
+import com.alibaba.cloud.ai.mcp.server.util.TokenHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -51,6 +52,7 @@ public class McpServerFilter implements WebFilter {
             logger.info("preHandle: 验证通过");
             logger.info("preHandle: 请求的URL: {}", exchange.getRequest().getURI());
             logger.info("preHandle: 请求的TOKEN: {}", token);
+            TokenHolder.setToken(token);
             // token验证通过，继续处理请求
             return chain.filter(exchange);
         } else {
