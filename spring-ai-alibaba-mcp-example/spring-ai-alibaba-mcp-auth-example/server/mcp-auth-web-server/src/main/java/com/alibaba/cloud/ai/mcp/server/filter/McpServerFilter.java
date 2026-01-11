@@ -15,7 +15,7 @@
  */
 package com.alibaba.cloud.ai.mcp.server.filter;
 
-import com.alibaba.cloud.ai.mcp.server.util.TokenHolder;
+import com.alibaba.cloud.ai.mcp.server.util.UserInfoHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +24,8 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 /**
  * @author yingzi
@@ -34,6 +36,8 @@ public class McpServerFilter implements WebFilter {
 
     private static final String TOKEN_HEADER = "token-1";
     private static final String TOKEN_VALUE = "yingzi-1";
+
+    private static final Map<String, String> USER_INFO_MAP = Map.of(TOKEN_VALUE, "Fake_UserInfo");
 
     private static final Logger logger = LoggerFactory.getLogger(McpServerFilter.class);
 
@@ -52,7 +56,7 @@ public class McpServerFilter implements WebFilter {
             logger.info("preHandle: 验证通过");
             logger.info("preHandle: 请求的URL: {}", exchange.getRequest().getURI());
             logger.info("preHandle: 请求的TOKEN: {}", token);
-            TokenHolder.setToken(token);
+            UserInfoHolder.setUserInfo(USER_INFO_MAP.get(token));
             // token验证通过，继续处理请求
             return chain.filter(exchange);
         } else {

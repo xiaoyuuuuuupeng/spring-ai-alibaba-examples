@@ -15,15 +15,16 @@
  */
 package com.alibaba.cloud.ai.mcp.server.util;
 
-public class TokenHolder {
+public class UserInfoHolder {
 
-    public static final InheritableThreadLocal<String> tokeContext = new InheritableThreadLocal<>();
+    //pass userInfo to tool methods, use InheritableThreadLocal can pass userInfo to child threads
+    public static final InheritableThreadLocal<String> userInfoContext = new InheritableThreadLocal<>();
 
-    public static String getToken() {
-        return tokeContext.get();
+    public static String getUserInfo() {
+        return userInfoContext.get();
     }
-    public static void setToken(String token) {
-        tokeContext.set(token);
+    public static void setUserInfo(String userInfo) {
+        userInfoContext.set(userInfo);
     }
 
 
